@@ -4,7 +4,8 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey = 'pk_live_51MgTytSBFYgXPIOlVJ51hbxhs41EBIsSOTjyTbXWnBWzrYIR46JtFeFnNj6JcvmgGV5y5STrKiMZTnQlCcEnzy3S00yjmoZKdr';
+  Stripe.publishableKey =
+      'pk_live_51MgTytSBFYgXPIOlVJ51hbxhs41EBIsSOTjyTbXWnBWzrYIR46JtFeFnNj6JcvmgGV5y5STrKiMZTnQlCcEnzy3S00yjmoZKdr';
   runApp(const Myapp());
 }
 

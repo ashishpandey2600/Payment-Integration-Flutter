@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'dart:html';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
 
@@ -43,17 +41,17 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> makepayment() async {
     try {
-      paymentIntentData = await createPaymenIntent('20', 'rupees');
+      paymentIntentData = await createPaymentIntent('100', 'INR');
 
-      await Stripe.instance.initPaymentSheet(
-        paymentSheetParameters: SetupPaymentSheetParameters(
-          googlePay: PaymentSheetGooglePay(merchantCountryCode: 'IN'),
-          applePay: PaymentSheetApplePay(merchantCountryCode: 'IN'),
-          paymentIntentClientSecret: paymentIntentData!['client_secret'],
-          style: ThemeMode.system,
-          merchantDisplayName: 'Ashish Pandey',
-        ),
-      );
+      await Stripe.instance
+          .initPaymentSheet(
+              paymentSheetParameters: SetupPaymentSheetParameters(
+            paymentIntentClientSecret: paymentIntentData!['client_secret'],
+            style: ThemeMode.system,
+            merchantDisplayName: 'Ashish Pandey',
+          ))
+          .then((value) {});
+
       displayPaymentSheet();
     } catch (e) {
       print('Exception' + e.toString());
@@ -79,7 +77,7 @@ class _HomePageState extends State<HomePage> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
   }
 
-  createPaymenIntent(String amount, String currency) async {
+  createPaymentIntent(String amount, String currency) async {
     try {
       Map<String, dynamic> body = {
         'amount': calculateAmount(amount),
@@ -103,6 +101,6 @@ class _HomePageState extends State<HomePage> {
 
   calculateAmount(String amount) {
     final price = int.parse(amount) * 100;
-    return price;
+    return price.toString();
   }
 }
